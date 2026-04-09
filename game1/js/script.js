@@ -1,29 +1,25 @@
-// PERMISSION IOS (DEVICE ORIENTATION) -----------------------------------------------------------
-let orientationPermissionRequested = false;
-
-window.addEventListener("touchstart", function requestIOSPermission() {
-    if (orientationPermissionRequested) return;
-
+// INITIALISATION DES VARIABLES ---------------------------------------------------------------------------
+// GESTION DES PERMISSIONS IOS (DeviceOrientation)
+function requestSensorPermissions() {
     if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
         DeviceOrientationEvent.requestPermission()
             .then(permissionState => {
                 if (permissionState === 'granted') {
-                    console.log("Device orientation permission granted.");
+                    console.log('Permission granted for device orientation.');
                 } else {
-                    console.warn("Device orientation permission denied.");
+                    console.warn('Permission denied for device orientation.');
                 }
             })
             .catch(console.error);
-
-        orientationPermissionRequested = true;
     } else {
-        orientationPermissionRequested = true;
+        console.log('Sensor permission is not required or not supported on this browser.');
     }
 
-    window.removeEventListener("touchstart", requestIOSPermission);
-}, { once: true });
+    body.removeEventListener("touchstart", requestSensorPermissions);
+}
 
-// INITIALISATION DES VARIABLES ---------------------------------------------------------------------------
+body.addEventListener("touchstart", requestSensorPermissions);
+
 const body = document.querySelector("body");
 
 // IMAGES
