@@ -1,25 +1,4 @@
 // INITIALISATION DES VARIABLES ---------------------------------------------------------------------------
-// GESTION DES PERMISSIONS IOS (DeviceOrientation)
-function requestSensorPermissions() {
-    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-        DeviceOrientationEvent.requestPermission()
-            .then(permissionState => {
-                if (permissionState === 'granted') {
-                    console.log('Permission granted for device orientation.');
-                } else {
-                    console.warn('Permission denied for device orientation.');
-                }
-            })
-            .catch(console.error);
-    } else {
-        console.log('Sensor permission is not required or not supported on this browser.');
-    }
-
-    body.removeEventListener("touchstart", requestSensorPermissions);
-}
-
-body.addEventListener("touchstart", requestSensorPermissions);
-
 const body = document.querySelector("body");
 
 // IMAGES
@@ -37,11 +16,11 @@ const fleche_coeur = document.querySelector("#Arrow_soin");
 
 // SON
 const musique_fond = new Audio("sound/musique_fond.mp3"); //Musique de fond
-musique_fond.loop = true;
+musique_fond.loop = true; 
 musique_fond.volume = 0.5;
 const dialogue_son = new Audio("sound/dialogue.mp3");
-const damage_sound = new Audio("sound/damage.mp3"); //Son de dommage
-const build_sound = new Audio("sound/build.mp3");
+const damage_sound = new Audio ("sound/damage.mp3"); //Son de dommage
+const build_sound = new Audio ("sound/build.mp3");
 const soin_sound = new Audio("sound/soin.wav");
 const win_son = new Audio("sound/win.wav")
 
@@ -107,14 +86,14 @@ function initialisation_jeu() {
     nbr_bois = 0;
     pourcentage_moulin = 0;
     index_moulin = 0;
-    bois_t = [];
+    bois_t = [];    
     planche_bois();
     boues = [];
     pluie = [];
     arrows = [];
-
+    
     creerPluie(); //Appeler la pluie
-
+    
     // SYSTÈME DE FLÈCHES
     delai_spawn_fleche = 500; // délai à 0.5 secondes
     clearTimeout(timer_spawn); // On nettoie les anciens spawn
@@ -174,7 +153,7 @@ window.addEventListener("touchstart", (e) => {
             console.log("Cheat code");
         }
     } else {
-        compteur_triche = 0;
+        compteur_triche = 0; 
     }
 
     // Les controle du joueur --------------
@@ -192,13 +171,13 @@ window.addEventListener("touchend", () => { //Lorsque l'utilisateur ne touche pl
 });
 
 function joueur() {
-    if (personnage.x < 0) personnage.x = 0; //éviter que le joueur va en dehors
-    else if (personnage.x > w - 80) personnage.x = w - 80;
+    if(personnage.x < 0) personnage.x = 0; //éviter que le joueur va en dehors
+    else if(personnage.x > w - 80) personnage.x = w - 80;
 
     let vitesse_finale = personnage.dx;
 
     if (personnage.vulnerabilite === false) { //Lorsque le joueur est atteint par une flèche, sa vitesse diminue pendant un temps
-        vitesse_finale = personnage.dx * 0.2;
+        vitesse_finale = personnage.dx * 0.2; 
     }
 
     personnage.x += (vitesse_finale * ratio);
@@ -209,7 +188,7 @@ function joueur() {
 let nbr_bois;
 let bois_t = [];
 function planche_bois() {
-    for (let i = 1; i <= 4; i++) {
+    for(let i = 1; i <= 4; i++) {
         bois_t.push({
             x: 30,
             y: h - 45,
@@ -275,7 +254,7 @@ window.addEventListener("deviceorientation", (e) => {
 
     // Délimiter les limites pour éviter qu'on puisse trop tourner le tel
     if (inclinaison !== null && inclinaison !== undefined) {
-
+        
         //Si inclinaison > 30 ou < -30 on bloque a cette valeur
         if (inclinaison > 30) inclinaison = 30;
         if (inclinaison < -30) inclinaison = -30;
@@ -285,7 +264,7 @@ window.addEventListener("deviceorientation", (e) => {
             inclinaison = 0;
         }
 
-        force_vent = inclinaison / 6;
+        force_vent = inclinaison / 6; 
     }
 });
 
@@ -306,7 +285,7 @@ function calculerSpawnX() {
 
 function creerFleche() {
     //Générer si c'est une flèche de coeur ou de degat
-    let chance = Math.floor(Math.random() * 10);
+    let chance = Math.floor(Math.random() * 10); 
     let type_fleche = (chance === 7) ? "soin" : "degat";
 
     arrows.push({
@@ -327,7 +306,7 @@ function creerFleche() {
 // PLUIE -----------------------------------------------------------------------------------------
 let pluie = [];
 function creerPluie() {
-    for (let i = 0; i < 200; i++) {
+    for(let i = 0; i < 200; i++) {
         pluie.push({
             x: (Math.random() * (w + 400)) - 200, //Position X
             y: Math.random() * h, //Position Y
@@ -342,11 +321,11 @@ let boues = [];
 let intervalBoue;
 function boue() {
     boues.push({
-        x: Math.random() * w - 150, //Position X généré aléatoirement
-        y: h - 30, //Position X
-        taille: 1, //2 taille : une petit (aucun effet), une grande (ralenti le joueur)
-        delai: 0 //Délai durant lequel la boue passe de petite à grande
-    });
+            x: Math.random() * w - 150, //Position X généré aléatoirement
+            y: h - 30, //Position X
+            taille: 1, //2 taille : une petit (aucun effet), une grande (ralenti le joueur)
+            delai: 0 //Délai durant lequel la boue passe de petite à grande
+        });
 }
 
 // Gérer les collisions entre le joueur et une flèche ---------------------------------------------------------------------------
@@ -358,26 +337,27 @@ function collision_fleche(fleche) {
     if (joueurBox.x < flecheBox.x + flecheBox.w &&
         joueurBox.x + joueurBox.w > flecheBox.x &&
         joueurBox.y < flecheBox.y + flecheBox.h &&
-        joueurBox.h + joueurBox.y > flecheBox.y) {
+        joueurBox.h + joueurBox.y > flecheBox.y) 
+    { 
         if (fleche.toucher_sol === false && fleche.dy > 0) {
-
+            
             // Si c'est une flèche de cupidon
             if (fleche.type === "soin") {
                 if (personnage.vie < 3) { //On limite à 3 coeurs max
                     personnage.vie++; //le joueur regagne une vie
                 }
-                soin_sound.play();
-
+                soin_sound.play(); 
+                
                 return true; // Demande la suppression immédiate de la flèche
-            }
-
+            } 
+            
             // Si c'est une flèche normal et qu'on est pas invinsible
             else if (personnage.vulnerabilite === true) {
                 damage_sound.play();
                 personnage.vie--;
-                personnage.vulnerabilite = false;
+                personnage.vulnerabilite = false; 
                 ecrase = 10;
-
+                
                 return true; // Demande la suppression immédiate de la flèche
             }
         }
@@ -400,7 +380,7 @@ function affichage(tempsActuel) {
         return;
     }
 
-    if (!tempsActuel) tempsActuel = performance.now();
+    if (!tempsActuel) tempsActuel = performance.now(); 
     let deltaTime = tempsActuel - dernierTemps;
     dernierTemps = tempsActuel;
     ratio = deltaTime / 16.66;
@@ -420,7 +400,7 @@ function affichage(tempsActuel) {
 
     // AFFICHER LA BOUE ------------------------
 
-    let modificateur_vitesse = 1.0;
+    let modificateur_vitesse = 1.0; 
     boues.forEach(boue => {
         if (boue.taille === 1) {
             level1.drawImage(boue1, boue.x, boue.y, 40, 15); //Afficher une petite flaque
@@ -428,9 +408,9 @@ function affichage(tempsActuel) {
             level1.drawImage(boue2, boue.x - 20, boue.y - 5, 80, 30); //Afficher une grosse flaque
         }
         boue.delai++;
-
+        
         //Après un certain délai, la boue devient plus grande et peu ralentir le joueur.
-        if (boue.delai === 180 && boue.taille === 1) {
+        if (boue.delai === 180 && boue.taille === 1) { 
             boue.taille = 2;
         }
 
@@ -452,8 +432,8 @@ function affichage(tempsActuel) {
         let fleche = arrows[i];
 
         if (fleche.toucher_sol === false) {
-            fleche.dy += 0.1 * ratio;
-
+            fleche.dy += 0.1 * ratio; 
+            
             fleche.x += (fleche.dx + force_vent) * ratio;
             fleche.y += fleche.dy * ratio;
         }
@@ -461,18 +441,18 @@ function affichage(tempsActuel) {
         // Rotation et Dessin
         level1.save();
         level1.translate(fleche.x + 25, fleche.y + 20);
-
+        
         if (fleche.toucher_sol === false) {
             fleche.angle_memoire = Math.atan2(fleche.dy, fleche.dx + force_vent); //Rotation de la flèche en fonction de sa direction
         }
         level1.rotate((fleche.angle_memoire || 0) - (Math.PI / 4));
 
         // Lorsque la flèche est tirée de loin (monte), elle parait plus petit et plus transparente
-        if (fleche.dy < 0) {
-            level1.scale(0.8, 0.8);
-            level1.globalAlpha = 0.2;
+        if (fleche.dy < 0) { 
+            level1.scale(0.8, 0.8); 
+            level1.globalAlpha = 0.2; 
         }
-
+        
         // Choix de l'image (Cupidon ou Normale)
         if (fleche.type === "soin") {
             level1.drawImage(fleche_coeur, -25, -20, 50, 40);
@@ -486,7 +466,7 @@ function affichage(tempsActuel) {
             fleche.compteur += ratio;
             if (fleche.compteur >= 12) {
                 fleche.indexSprite++;
-                if (fleche.indexSprite >= flèches.length) fleche.indexSprite = 0;
+                if (fleche.indexSprite >= flèches.length) fleche.indexSprite = 0; 
                 fleche.compteur = 0;
             }
         }
@@ -498,9 +478,9 @@ function affichage(tempsActuel) {
             fleche.delai += ratio;
 
             // Si le délai au sol est dépassé, la flèche est supprimé
-            if (fleche.delai >= 120) {
-                arrows.splice(i, 1);
-                continue;
+            if (fleche.delai >= 120) { 
+                arrows.splice(i, 1); 
+                continue; 
             }
         }
 
@@ -509,7 +489,7 @@ function affichage(tempsActuel) {
         if (joueurTouche === true) {
             arrows.splice(i, 1); // La flèche disparaît sur le joueur
         }
-
+        
         // si la flèche vole trop loin hors de l'écran par les côtés, on la supprime
         if (fleche.x > w + 100 || fleche.x < -100) {
             arrows.splice(i, 1);
@@ -517,10 +497,10 @@ function affichage(tempsActuel) {
     }
 
     // AFFICHER LA PLUIE ------------------------------------------
-    level1.strokeStyle = "#100F3D";
+    level1.strokeStyle = "#100F3D"; 
     level1.lineWidth = 2;
     level1.beginPath();
-
+    
     pluie.forEach(goutte => {
         if (goutte.y > h) {
             goutte.y = -20 - (Math.random() * 100);
@@ -537,21 +517,21 @@ function affichage(tempsActuel) {
             goutte.x = -150;
             goutte.y = Math.random() * h;
         }
-
+        
         goutte.y += goutte.dy * ratio;
         goutte.x += (goutte.dx + force_vent) * ratio;
-
+        
         level1.moveTo(goutte.x, goutte.y);
-        level1.lineTo(goutte.x - (force_vent * 3), goutte.y - 15);
+        level1.lineTo(goutte.x - (force_vent * 3), goutte.y - 15); 
     });
-
+    
     level1.stroke();
 
     // GESTION DU BOIS --------------------------------------------
 
     if (nbr_bois < bois_t.length) {
         if (bois_t[nbr_bois].recup === false) {
-            level1.drawImage(bois, bois_t[nbr_bois].x, bois_t[nbr_bois].y, 70, 40);
+            level1.drawImage(bois, bois_t[nbr_bois].x, bois_t[nbr_bois].y, 70, 40); 
         }
         if (personnage.x < 50 && bois_t[nbr_bois].recup === false) {
             bois_t[nbr_bois].recup = true;
@@ -560,21 +540,21 @@ function affichage(tempsActuel) {
             build_sound.play();
             bois_t[nbr_bois].recup = false;
             nbr_bois++;
-            pourcentage_moulin += 25;
+            pourcentage_moulin += 25; 
         }
     }
     // AFFICHER LE JOUEUR ---------------------------------------------
     joueur();
-
+    
     // ANIMATION DU JOUEUR
-    let imageActuelle = perso1;
+    let imageActuelle = perso1; 
 
     if (personnage.dx !== 0) {
         personnage.compteurAnim++;
-        if (personnage.compteurAnim >= 18) {
+        if (personnage.compteurAnim >= 18) { 
             personnage.frameAnim++;
             if (personnage.frameAnim >= animationMarche.length) {
-                personnage.frameAnim = 0;
+                personnage.frameAnim = 0; 
             }
             personnage.compteurAnim = 0;
         }
@@ -586,8 +566,8 @@ function affichage(tempsActuel) {
     // gestion de l'invincibilité (qui dure quelque temps après que le joueur ait été touché par une flèche)
     if (personnage.vulnerabilite === false) {
         personnage.delai_invincible++;
-
-        if (personnage.delai_invincible >= 100) {
+        
+        if (personnage.delai_invincible >= 100) { 
             personnage.vulnerabilite = true;
             ecrase = 0;
             personnage.delai_invincible = 0;
@@ -623,7 +603,7 @@ function affichage(tempsActuel) {
 
     for (let i = 0; i < personnage.vie; i++) {
         level1.drawImage(vie, positionX_coeur, 10, 40, 35);
-        positionX_coeur += 50;
+        positionX_coeur += 50; 
     }
 
     // Si le joueur a encore de la vie
@@ -634,7 +614,7 @@ function affichage(tempsActuel) {
             animation_rouage += (direction_rouage * ratio);
             if (animation_rouage >= 20) {
                 direction_rouage = -1;
-            }
+            } 
             else if (animation_rouage <= -20) {
                 direction_rouage = 1;
             }
@@ -646,11 +626,11 @@ function affichage(tempsActuel) {
         }
         // Sinon la boucle continue
         requestAnimationFrame(affichage);
-
+        
     } else {
         menu_defaite.classList.remove("invisible"); // Le joueur n'a plus de vie donc game over
         navigator.vibrate(200);
-        musique_fond.pause();
+        musique_fond.pause(); 
         musique_fond.currentTime = 0;
     }
 }

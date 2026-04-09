@@ -245,6 +245,20 @@ function demarrer() {
     if (document.documentElement.requestFullscreen) {
         document.documentElement.requestFullscreen().catch(err => console.log(err));
     }
+
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        DeviceOrientationEvent.requestPermission()
+            .then(permissionState => {
+                if (permissionState === 'granted') {
+                    console.log("Device orientation permission granted.");
+                } else {
+                    console.warn("Device orientation permission denied.");
+                }
+            })
+            .catch(console.error);
+    }
+    // -------------------------------------------------------------
+
     menu2_level1.classList.add("invisible");
     menu_defaite.classList.add("invisible");
     ecran_allumee();
