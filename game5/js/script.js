@@ -18,8 +18,8 @@ let dialogueAudioPrimed = false;
 let dialoguePrimePromise = null;
 
 // ==================== Paramètres GPS ====================
-const TARGET_LAT = 47.742733;
-const TARGET_LNG = 7.348133;
+const TARGET_LAT = 47.746745;
+const TARGET_LNG = 7.338401;
 const MAX_DISTANCE = 30; // metres
 
 // ==================== État de suivi GPS/carte ====================
