@@ -1,0 +1,620 @@
+:root {
+    --app-vh: 100dvh;
+    --game4-side-gap: clamp(12px, 4vw, 22px);
+    --ui-font: "UnifrakturCook", cursive;
+    --ui-title-font: "UnifrakturCook", cursive;
+    --ui-panel: rgba(24, 14, 10, 0.88);
+    --ui-border: rgba(245, 222, 179, 0.32);
+    --ui-gold: bisque;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    width: 100%;
+    height: var(--app-vh);
+    min-height: var(--app-vh);
+    background-color: black;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    position: relative;
+    touch-action: none;
+}
+
+body {
+    background:
+        radial-gradient(circle at 16% 22%, rgba(90, 35, 20, 0.22), transparent 34%),
+        radial-gradient(circle at 84% 78%, rgba(165, 42, 42, 0.16), transparent 38%),
+        linear-gradient(180deg, #090707 0%, #000000 100%);
+    color: white;
+    font-family: var(--ui-font);
+    text-align: center;
+    user-select: none;
+    -webkit-user-select: none;
+    overscroll-behavior: none;
+}
+
+/* --- ECRAN MAP / GPS --- */
+.map_screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--app-vh);
+    background:
+        radial-gradient(circle at 20% 18%, rgba(95, 28, 14, 0.25), transparent 34%),
+        radial-gradient(circle at 82% 84%, rgba(165, 42, 42, 0.2), transparent 40%),
+        linear-gradient(180deg, rgba(9, 6, 5, 0.96) 0%, rgba(0, 0, 0, 0.98) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: max(20px, env(safe-area-inset-top)) var(--game4-side-gap) max(20px, env(safe-area-inset-bottom));
+    box-sizing: border-box;
+    animation: menuFadeIn 0.35s ease-out;
+}
+
+.map_screen h2 {
+    width: min(640px, calc(100% - (2 * var(--game4-side-gap))));
+    margin: 0 0 6px 0;
+    font-family: var(--ui-title-font);
+    font-size: clamp(46px, 9vw, 74px);
+    color: var(--ui-gold);
+    text-shadow: 0 0 16px rgba(165, 42, 42, 0.35), 0 4px 12px rgba(0, 0, 0, 0.55);
+    line-height: 1.1;
+}
+
+.map_screen>p {
+    width: min(640px, calc(100% - (2 * var(--game4-side-gap))));
+    margin: 0 0 18px 0;
+    color: #f0d5b3;
+    font-size: clamp(17px, 4.8vw, 22px);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+
+#gps-tracker {
+    background: var(--ui-panel);
+    padding: 22px;
+    border-radius: 16px;
+    margin: 10px 0 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid var(--ui-border);
+    box-shadow: inset 0 0 0 1px rgba(255, 228, 196, 0.08), 0 18px 36px rgba(0, 0, 0, 0.42);
+    width: min(430px, calc(100% - (2 * var(--game4-side-gap))));
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#gps-btn,
+#open-map-btn,
+#close-map-btn {
+    border: 1px solid rgba(115, 42, 42, 0.7);
+    color: brown;
+    font-family: var(--ui-font);
+    letter-spacing: 0.2px;
+    padding: 11px 16px;
+    border-radius: 9px;
+    font-weight: normal;
+    cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255, 240, 220, 0.22), 0 10px 18px rgba(0, 0, 0, 0.35);
+    pointer-events: auto;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+#gps-btn {
+    background: bisque;
+    border: 1px solid rgba(115, 42, 42, 0.7);
+    font-size: clamp(18px, 5vw, 24px);
+}
+
+#open-map-btn {
+    margin-top: 8px;
+    background: brown;
+    color: bisque;
+    border: 1px solid rgba(255, 228, 196, 0.35);
+    font-size: clamp(17px, 4.5vw, 22px);
+}
+
+#close-map-btn {
+    margin: 0;
+    min-width: auto;
+    min-height: auto;
+    font-size: 14px;
+    padding: 8px 12px;
+    background: brown;
+    color: bisque;
+}
+
+#gps-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+#info-distance {
+    width: 100%;
+    color: bisque;
+    text-align: center;
+    font-size: clamp(18px, 5vw, 22px);
+    font-family: var(--ui-font);
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+#info-distance small {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.72em;
+    color: #d8b38a;
+}
+
+#direction-text {
+    font-size: clamp(16px, 4.3vw, 20px);
+    color: #dcb587;
+    margin: 0 0 12px 0;
+    text-align: center;
+}
+
+#compass-container {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 228, 196, 0.06);
+    border: 3px solid var(--ui-gold);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    box-shadow: inset 0 0 12px rgba(255, 228, 196, 0.22), 0 0 18px rgba(0, 0, 0, 0.6);
+    margin-bottom: 10px;
+}
+
+#compass-arrow {
+    font-size: 30px;
+    line-height: 1;
+    transition: transform 0.2s ease-out;
+    transform-origin: center center;
+}
+
+.gps_map_popup,
+.gps-map-popup {
+    position: absolute;
+    inset: 0;
+    z-index: 3200;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 14px;
+    box-sizing: border-box;
+}
+
+.gps_map_card,
+.gps-map-card {
+    width: min(920px, 95vw);
+    height: min(76dvh, 620px);
+    background: #15100e;
+    border: 2px solid brown;
+    border-radius: 12px;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.gps_map_head,
+.gps-map-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    background: #2a1a14;
+    border-bottom: 1px solid rgba(245, 222, 179, 0.25);
+}
+
+.gps_map_head h3,
+.gps-map-head h3 {
+    margin: 0;
+    color: bisque;
+    font-size: 18px;
+}
+
+#map {
+    flex: 1;
+    width: 100%;
+}
+
+#map .leaflet-control,
+#map .leaflet-routing-container,
+#map .leaflet-routing-alt,
+#map .leaflet-routing-alt h2,
+#map .leaflet-routing-alt h3,
+#map .leaflet-routing-alt table,
+#map .leaflet-routing-alt tr,
+#map .leaflet-routing-alt td,
+#map .leaflet-routing-alt span,
+#map .leaflet-routing-geocoders,
+#map .leaflet-routing-geocoder,
+#map .leaflet-routing-collapse-btn {
+    color: #000 !important;
+    font-family: Arial, sans-serif !important;
+}
+
+#map .leaflet-routing-container {
+    background: rgba(255, 248, 235, 0.95) !important;
+}
+
+.gps_map_card,
+.gps_map_card *,
+.gps-map-card,
+.gps-map-card * {
+    font-family: Arial, sans-serif !important;
+}
+
+.hidden {
+    display: none !important;
+}
+
+@keyframes menuFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(1.015);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 780px) {
+    .map_screen {
+        justify-content: center;
+    }
+
+    .map_screen h2 {
+        font-size: clamp(36px, 11vw, 54px);
+        margin-top: 0;
+    }
+
+    .map_screen>p {
+        font-size: clamp(17px, 4.8vw, 22px);
+        margin-bottom: 12px;
+    }
+
+    #gps-tracker {
+        width: min(430px, calc(100% - (2 * var(--game4-side-gap))));
+        padding: 16px;
+    }
+
+    .gps_map_popup,
+    .gps-map-popup {
+        padding: 0;
+    }
+
+    .gps_map_card,
+    .gps-map-card {
+        width: 100%;
+        height: var(--app-vh);
+        border-radius: 0;
+        border: 0;
+    }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+    .map_screen {
+        padding-top: max(10px, env(safe-area-inset-top));
+    }
+
+    .map_screen h2 {
+        font-size: clamp(30px, 7.5vw, 46px);
+        margin-bottom: 6px;
+    }
+
+    .map_screen>p {
+        font-size: clamp(14px, 2.7vw, 18px);
+        margin-bottom: 8px;
+    }
+
+    #gps-btn,
+    #open-map-btn,
+    #close-map-btn {
+        font-size: clamp(14px, 2.8vw, 18px);
+        min-height: 38px;
+        padding: 8px 12px;
+    }
+}
+
+/* --- INTRO & DIALOGUES --- */
+.gameIntro {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--app-vh);
+    padding: 15px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: black;
+    color: white;
+    text-align: center;
+    z-index: 10;
+    gap: 15px;
+}
+
+.gameIntro h1 {
+    font-family: "UnifrakturCook", cursive;
+    font-weight: 700;
+    font-style: normal;
+    color: brown;
+}
+
+.gameIntro button {
+    font-family: "UnifrakturCook", cursive;
+    font-style: normal;
+    color: brown;
+    width: 200px;
+    padding: 5px;
+    background-color: bisque;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+/* --- INTRO & DIALOGUES --- */
+.menu_dialogue {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--app-vh);
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 15;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.boite_dialogue {
+    background-color: bisque;
+    color: brown;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    text-align: center;
+    font-family: "UnifrakturCook", cursive;
+    font-size: 1.2rem;
+    box-shadow: 0px 0px 20px rgba(165, 42, 42, 0.5);
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dialogue_button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: brown;
+    color: bisque;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    flex-shrink: 0;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.dialogue_perso {
+    position: absolute;
+    z-index: 1;
+    max-width: 100%;
+    width: 70vw;
+    max-height: 90vh;
+    object-fit: contain;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.6;
+}
+
+@media (max-width: 450px) {
+    #gps-tracker {
+        padding: 12px;
+    }
+
+    #gps-btn,
+    #open-map-btn,
+    #close-map-btn {
+        font-size: 1rem;
+    }
+
+    .gps_map_popup {
+        padding: 0;
+    }
+
+    .gps_map_card {
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+        border: 0;
+    }
+
+    .boite_dialogue {
+        font-size: 1rem;
+        padding: 15px;
+    }
+
+    .dialogue_button {
+        padding: 8px 16px;
+    }
+}
+
+.lettre {
+    opacity: 0;
+    transition: opacity 0.05s;
+}
+
+.lettre.visible {
+    opacity: 1;
+}
+
+/* --- JEU & UI --- */
+#gameCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--app-vh);
+    z-index: 1;
+}
+
+.buggatiroyale {
+    position: absolute;
+    bottom: -24%;
+    right: 0%;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    animation: moteur 0.5s infinite ease-in-out alternate;
+    z-index: 2;
+    overflow-y: visible;
+}
+
+.buggatiroyale_dash {
+    width: 100%;
+    display: block;
+}
+
+.buggatiroyale_wheel {
+    position: absolute;
+    bottom: 10px;
+    left: 53%;
+    width: 500px;
+    transform-origin: center center;
+    pointer-events: none;
+}
+
+@keyframes moteur {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-10px);
+    }
+}
+
+@media (max-width: 950px) {
+    .buggatiroyale_dash {
+        width: 200%;
+    }
+}
+
+@media (max-width: 550px) {
+    .buggatiroyale_dash {
+        width: 300%;
+    }
+}
+
+/* --- ECRANS DE FIN --- */
+.overlay_screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--app-vh);
+    background-color: rgba(0, 0, 0, 0.85);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 30;
+    color: bisque;
+    font-family: "UnifrakturCook", cursive;
+    text-align: center;
+}
+
+.overlay_screen p {
+    font-size: 1.5rem;
+    margin: 10px 0 30px 0;
+}
+
+.titre_defaite {
+    font-size: 4rem;
+    color: #ff3333;
+    text-shadow: 0 0 10px red;
+    margin: 0;
+}
+
+.titre_victoire {
+    font-size: 4rem;
+    color: #ffd700;
+    text-shadow: 0 0 10px #ffaa00;
+    margin: 0;
+}
+
+.overlay_btn {
+    padding: 15px 30px;
+    background-color: brown;
+    color: bisque;
+    border: 2px solid bisque;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    font-family: "UnifrakturCook", cursive;
+    transition: transform 0.2s, background-color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.overlay_btn:hover {
+    transform: scale(1.1);
+    background-color: #8b0000;
+}
+
+.glowing_piece {
+    margin: 30px 0;
+    position: relative;
+    display: inline-block;
+}
+
+.glowing_piece img {
+    width: 180px;
+    filter: drop-shadow(0 0 15px #ffd700) drop-shadow(0 0 30px #ffaa00);
+    animation: pulseGlow 1.5s infinite alternate;
+}
+
+@keyframes pulseGlow {
+    from {
+        filter: drop-shadow(0 0 10px #ffd700) drop-shadow(0 0 20px #ff8800);
+        transform: scale(1);
+    }
+
+    to {
+        filter: drop-shadow(0 0 30px #ffffaa) drop-shadow(0 0 60px #ffdd00);
+        transform: scale(1.08);
+    }
+}

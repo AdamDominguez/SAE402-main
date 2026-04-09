@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Level 2</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jacquard+24&family=Jersey+20&family=Micro+5&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+    <link rel="stylesheet" href="style/style.css">
+</head>
+
+<body>
+    <div id="ui-layer">
+        <button id="mute-btn" title="Toggle mute"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                fill="currentColor" class="bi bi-volume-down-fill" viewBox="0 0 16 16">
+                <path
+                    d="M9 4a.5.5 0 0 0-.812-.39L5.825 5.5H3.5A.5.5 0 0 0 3 6v4a.5.5 0 0 0 .5.5h2.325l2.363 1.89A.5.5 0 0 0 9 12zm3.025 4a4.5 4.5 0 0 1-1.318 3.182L10 10.475A3.5 3.5 0 0 0 11.025 8 3.5 3.5 0 0 0 10 5.525l.707-.707A4.5 4.5 0 0 1 12.025 8" />
+            </svg></button>
+        <button id="pause-btn" class="hidden" title="Pause">Pause</button>
+        <div id="score">Score: 0</div>
+        <div id="shame-bar-container">
+            <div id="shame-bar"></div>
+        </div>
+        <div id="start-screen">
+            <h1>The Punishment</h1>
+            <p id="start-subtitle">Tilt your phone to dodge tomatoes!<br>But watch out for the swinging
+                stone!</p>
+            <p id="gps-status" class="gps-waiting hidden">Searching for GPS signal...</p>
+            <button id="open-map-btn" class="hidden">View map</button>
+            <button id="start-btn" class="hidden" disabled>Start</button>
+            <button id="adventure-start-btn">Start Adventure</button>
+
+            <div id="dialogue-stage" class="hidden">
+                <img id="dialogue-background" alt="Village scenery">
+                <img id="dialogue-villager-young" alt="Young villager">
+                <img id="dialogue-cart" alt="Cart">
+                <img id="dialogue-villager-old" alt="Elderly villager">
+                <img id="dialogue-executioner" alt="Executioner" class="hidden">
+                <div id="dialogue-black-screen" class="hidden"></div>
+
+                <div id="dialogue-box">
+                    <h2 id="dialogue-speaker"></h2>
+                    <p id="dialogue-text"></p>
+                    <span id="dialogue-hint">Touch the screen to continue</span>
+                </div>
+            </div>
+        </div>
+        <div id="game-over-screen" class="hidden">
+            <h1>Shame on the chatterboxes!</h1>
+            <p>Final score: <span id="final-score">0</span></p>
+            <button id="restart-btn">Play again</button>
+        </div>
+        <div id="game-win-screen" class="hidden">
+            <h1>Victory!</h1>
+            <p>You have recovered the chronogear fragment, congratulations!</p>
+            <button id="win-continue-btn">Continue the adventure</button>
+            <button id="win-restart-btn">Play again</button>
+        </div>
+        <div id="orientation-lock-screen" class="hidden">
+            <h1>Phone horizontal</h1>
+            <p>Turn your phone to portrait mode to play.</p>
+        </div>
+        <div id="map-popup" class="hidden">
+            <div id="map-popup-content">
+                <button id="close-map-btn">Close</button>
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+    <canvas id="game-canvas"></canvas>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/globals.js"></script>
+    <script src="js/integration.js"></script>
+    <script src="js/input.js"></script>
+    <script src="js/Player.js"></script>
+    <script src="js/Pendulum.js"></script>
+    <script src="js/Tomato.js"></script>
+    <script src="js/Fragment.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

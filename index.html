@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Chronogear adventure hub, playable offline as PWA.">
+    <meta name="theme-color" content="#111111">
+    <title>The Chronogear</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="favicon/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg">
+    <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="stylesheet" href="style/hub.css">
+</head>
+
+<body>
+    <header id="hub-header">
+        <div class="fond"></div>
+        <nav class="menu">
+            <div class="burger">
+                <span class="john"></span>
+                <span class="joe"></span>
+                <span class="johnny"></span>
+            </div>
+            <h2>Teacher Access (Debug)</h2>
+            <a href="#" data-game-id="1">Launch Game 1</a>
+            <a href="#" data-game-id="2">Launch Game 2</a>
+            <a href="#" data-game-id="3">Launch Game 3</a>
+            <a href="#" data-game-id="4">Launch Game 4</a>
+            <a href="#" data-game-id="5">Launch Game 5</a>
+        </nav>
+    </header>
+
+    <main class="hub-layout">
+        <video id="transition-video" src="transition/transition_jeu.mp4" playsinline style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:100; display:none;"></video>
+        <iframe
+            id="game-frame"
+            title="Current game"
+            src=""
+            allow="accelerometer; gyroscope; geolocation; vibrate"
+            referrerpolicy="no-referrer"
+        ></iframe>
+
+        <section id="cinematic-overlay" class="cinematic-overlay hidden">
+            <img id="cinematic-bg" src="img/decor/decor_shaman.png" alt="Shamanic scenery">
+            <img id="cinematic-shaman" src="img/Shaman/shaman.png" alt="The Shaman">
+            <div id="cinematic-dialogue-box">
+                <h2 id="cinematic-speaker">The Shaman</h2>
+                <p id="cinematic-text"></p>
+                <span id="cinematic-hint">Touch the screen to continue</span>
+            </div>
+        </section>
+
+        <section id="story-overlay" class="story-overlay">
+            <div class="story-panel">
+                <h1 id="story-title">Loading...</h1>
+                <p id="story-text">Preparing the adventure...</p>
+                <div class="controls">
+                    <button id="launch-game-btn" type="button">Access the game</button>
+                    <button id="continue-btn" type="button">Go to next game</button>
+                    <button id="reset-btn" type="button">Reset the adventure</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        /* Enregistré avant les autres scripts pour limiter les risques de non-mise à jour. */
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker
+                    .register('./sw.js', { scope: './' })
+                    .then((registration) => {
+                        registration.update();
+                    })
+                    .catch(() => {
+                        /* Ignore l'erreur pour éviter de bloquer l'application. */
+                    });
+            });
+        }
+    </script>
+    <script src="js/hub.js"></script>
+</body>
+
+</html>

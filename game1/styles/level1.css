@@ -1,0 +1,287 @@
+/******** Police d'écriture ***********/
+@font-face {
+    font-family: "Retro";
+    src: url("../img/fonts/Perfect\ DOS\ VGA\ 437\ Win.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    --font: "Retro";
+}
+
+body {
+    margin: 0;
+    background: rgb(63, 63, 63);
+    font-family: "Retro", sans-serif;
+    color: white;
+}
+
+
+/******************* Carte ****************/
+
+
+#map-container {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 50;
+    background-color: #3f3f3f;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+}
+
+#info-distance {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    text-align: center;
+    color: #141414;
+}
+
+#menu-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/*************** Canvas **********/
+canvas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/****************** Menus ********************/
+
+/********* Menu dialogue *********/
+
+.menu_dialogue {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 20;
+    cursor: default;
+}
+
+.dialogue_conteneur {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+.boite_dialogue {
+    min-height: 100px;
+    width: 100%;
+    background-color: #141414;
+    border: 4px solid #ffeeee;
+    border-radius: 8px;
+    padding: 10px;
+    color: white;
+    font-family: "Retro", sans-serif;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    margin-bottom: 0px;
+    position: relative;
+}
+
+.boite_dialogue h3 {
+    margin: 0 0 10px 0;
+    color: #ffd739;
+    font-size: 1.4rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 5px;
+}
+
+.boite_dialogue p {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.lettre {
+    opacity: 0;
+}
+
+.lettre.visible {
+    opacity: 1;
+}
+
+.dialogue_button {
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    text-align: right;
+    margin-bottom: 0;
+    opacity: 0;
+    color: #ffd739;
+}
+
+.menu1_level1,
+.menu2_level1,
+.menu_défaite_level1,
+.menu_fin_level1,
+.tourner-ecran {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    text-align: center;
+    background: #00000060;
+}
+
+* .menu1_level1 h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    text-shadow: 3px 3px 5px #000;
+    color: #ffcc00;
+}
+
+.tuto_texte {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    max-width: 80%;
+}
+
+.tuto_texte h2 {
+    margin-top: 0;
+    color: #ffcc00;
+}
+
+/* BOUTONS */
+.menu_button {
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 50px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #ffeeee;
+    background: rgb(85, 97, 138);
+    border: solid 3px #ffeeee;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+
+.touches {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+}
+
+.touche_gauche,
+.touche_droite {
+    width: 50%;
+    height: 100%;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+/* animation */
+@keyframes toucher {
+    0% {
+        background-color: #e2e2e266;
+    }
+
+    100% {
+        background-color: transparent;
+    }
+}
+
+.anime-touche {
+    animation: toucher 0.4s ease-out;
+}
+
+/* Quand les menus ne sont pas affichés */
+.invisible {
+    display: none !important;
+    pointer-events: none;
+}
+
+/* div qui apparait quand le mobile est en portrait */
+
+#tourner-ecran {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(26, 26, 26, 0.9);
+    color: #ffeeee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 1.5rem;
+    font-family: "Retro", sans-serif;
+    z-index: 9999;
+    padding: 20px;
+}
+
+#mobile {
+    animation: mobile_rotate 1s ease infinite;
+    transform-origin: 110px 145px;
+}
+
+@keyframes mobile_rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(-90deg);
+    }
+
+    100% {
+        transform: rotate(-90deg);
+    }
+}
+
+/* Si l'écran est en mode Paysage (plus large que haut) */
+@media screen and (orientation: landscape) {
+    #tourner-ecran {
+        display: none;
+    }
+}

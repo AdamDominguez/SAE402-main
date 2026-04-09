@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Le niveau 1" />
+    <title>Level 1</title>
+    <link rel="stylesheet" href="styles/level1.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+
+<body>
+    <!-------------------------------------- MAP -------------------------------------->
+    <div id="map-container">
+        <div id="map"></div>
+        <div id="info-distance">Searching for GPS signal...</div>
+    </div>
+    <!-------------------- Ecran tourner le téléphone (quand le téléphone est en portrait) -------------------->
+    <div id="tourner-ecran">
+        <svg width="212" height="289" viewBox="0 0 212 289" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M178.5 43.1122L180.301 41.378V41.378L178.5 43.1122ZM129.169 27.41C128.229 28.4213 128.287 30.0031 129.298 30.9432L145.777 46.2624C146.789 47.2025 148.37 47.1448 149.31 46.1335C150.251 45.1222 150.193 43.5404 149.182 42.6003L134.533 28.9832L148.15 14.3349C149.09 13.3236 149.033 11.7417 148.021 10.8017C147.01 9.86161 145.428 9.91933 144.488 10.9306L129.169 27.41ZM193 86.1122C195.5 86.1584 195.5 86.1576 195.5 86.1567C195.5 86.1563 195.5 86.1553 195.5 86.1544C195.5 86.1526 195.5 86.1505 195.5 86.1479C195.5 86.1427 195.5 86.1359 195.5 86.1274C195.5 86.1105 195.501 86.0869 195.501 86.057C195.502 85.997 195.502 85.9113 195.502 85.801C195.502 85.5805 195.5 85.2617 195.492 84.8542C195.476 84.0393 195.436 82.8685 195.339 81.4191C195.147 78.5233 194.73 74.4987 193.83 69.9686C192.042 60.9747 188.289 49.6733 180.301 41.378L178.5 43.1122L176.699 44.8463C183.718 52.1343 187.215 62.3329 188.926 70.9432C189.775 75.2152 190.169 79.0187 190.35 81.7506C190.441 83.115 190.478 84.2078 190.493 84.9532C190.5 85.3258 190.502 85.6112 190.502 85.7999C190.502 85.8942 190.502 85.9644 190.501 86.0091C190.501 86.0315 190.501 86.0475 190.501 86.0571C190.501 86.0618 190.501 86.065 190.501 86.0665C190.501 86.0672 190.501 86.0675 190.501 86.0675C190.501 86.0674 190.501 86.067 190.501 86.067C190.501 86.0666 190.501 86.066 193 86.1122ZM178.5 43.1122L180.301 41.378C172.389 33.1621 159.812 29.5616 149.655 27.9436C144.509 27.1239 139.84 26.7919 136.458 26.6641C134.765 26.6001 133.39 26.5871 132.432 26.5903C131.953 26.5919 131.579 26.5976 131.321 26.6029C131.192 26.6056 131.092 26.6082 131.023 26.6102C130.988 26.6112 130.961 26.6121 130.942 26.6127C130.933 26.613 130.925 26.6132 130.92 26.6134C130.917 26.6135 130.914 26.6136 130.913 26.6137C130.912 26.6137 130.911 26.6137 130.91 26.6138C130.91 26.6138 130.909 26.6138 131 29.1121C131.091 31.6105 131.091 31.6105 131.09 31.6105C131.09 31.6105 131.09 31.6105 131.09 31.6105C131.091 31.6105 131.091 31.6105 131.092 31.6104C131.095 31.6104 131.099 31.6102 131.106 31.61C131.118 31.6096 131.139 31.6089 131.167 31.6081C131.223 31.6065 131.309 31.6042 131.425 31.6019C131.655 31.5971 132.001 31.5918 132.449 31.5903C133.346 31.5873 134.652 31.5994 136.269 31.6605C139.507 31.7829 143.969 32.101 148.868 32.8814C158.801 34.4636 169.975 37.8632 176.699 44.8463L178.5 43.1122Z"
+                fill="white" />
+            <path
+                d="M33.3022 249.077L31.5015 250.811V250.811L33.3022 249.077ZM82.6334 264.779C83.5735 263.768 83.5158 262.186 82.5045 261.246L66.0251 245.926C65.0138 244.986 63.432 245.044 62.4919 246.055C61.5518 247.067 61.6096 248.649 62.6208 249.589L77.2692 263.206L63.6521 277.854C62.712 278.865 62.7698 280.447 63.781 281.387C64.7923 282.327 66.3741 282.27 67.3142 281.258L82.6334 264.779ZM18.8022 206.077C16.3027 206.031 16.3026 206.031 16.3026 206.032C16.3026 206.033 16.3026 206.034 16.3026 206.035C16.3026 206.036 16.3025 206.038 16.3025 206.041C16.3024 206.046 16.3023 206.053 16.3022 206.061C16.3019 206.078 16.3016 206.102 16.3014 206.132C16.3008 206.192 16.3002 206.278 16.3002 206.388C16.3002 206.608 16.3022 206.927 16.3103 207.335C16.3264 208.15 16.3667 209.32 16.463 210.77C16.6555 213.666 17.0725 217.69 17.9727 222.22C19.76 231.214 23.5131 242.516 31.5015 250.811L33.3022 249.077L35.103 247.343C28.0847 240.055 24.5878 229.856 22.8768 221.246C22.0278 216.974 21.6336 213.17 21.452 210.438C21.3614 209.074 21.3241 207.981 21.3093 207.236C21.3019 206.863 21.3002 206.578 21.3002 206.389C21.3002 206.295 21.3007 206.225 21.3011 206.18C21.3013 206.157 21.3015 206.141 21.3017 206.132C21.3017 206.127 21.3018 206.124 21.3018 206.122C21.3018 206.122 21.3018 206.121 21.3018 206.121C21.3018 206.121 21.3018 206.122 21.3018 206.122C21.3018 206.122 21.3018 206.123 18.8022 206.077ZM33.3022 249.077L31.5015 250.811C39.4135 259.027 51.9903 262.627 62.1478 264.245C67.2938 265.065 71.9627 265.397 75.3444 265.525C77.0372 265.589 78.4126 265.602 79.37 265.599C79.8489 265.597 80.2236 265.591 80.4816 265.586C80.6106 265.583 80.7105 265.581 80.7797 265.579C80.8143 265.578 80.8412 265.577 80.8602 265.576C80.8697 265.576 80.8773 265.576 80.8828 265.575C80.8856 265.575 80.8879 265.575 80.8897 265.575C80.8906 265.575 80.8915 265.575 80.892 265.575C80.8928 265.575 80.8935 265.575 80.8024 263.077C80.7112 260.578 80.7117 260.578 80.712 260.578C80.712 260.578 80.7122 260.578 80.7121 260.578C80.7118 260.578 80.7111 260.578 80.7099 260.578C80.7075 260.579 80.7031 260.579 80.6968 260.579C80.6841 260.579 80.6637 260.58 80.6356 260.581C80.5795 260.582 80.4931 260.585 80.3778 260.587C80.1473 260.592 79.8017 260.597 79.3533 260.599C78.4564 260.602 77.15 260.59 75.5332 260.528C72.2956 260.406 67.8338 260.088 62.9344 259.308C53.0011 257.725 41.8278 254.326 35.103 247.343L33.3022 249.077Z"
+                fill="white" />
+            <path id="mobile"
+                d="M77 205.5H142M72 227H145C150.523 227 155 222.523 155 217V73C155 67.4772 150.523 63 145 63H72C66.4772 63 62 67.4772 62 73V217C62 222.523 66.4772 227 72 227Z"
+                stroke="white" stroke-width="3" />
+        </svg>
+    </div>
+    <!----------------------------------- MENU ----------------------------------->
+    <div class="menu1_level1">
+        <h1>Chapter 1 — The Origin</h1>
+        <div class="menu_button" id="btn_menu1">Continue</div>
+    </div>
+
+    <!------------ Menu dialogue ------------>
+    <div class="menu_dialogue invisible">
+        <div class="dialogue_conteneur">
+            <div class="boite_dialogue">
+                <h3>Carpenter's daughter</h3>
+                <p id="texte_dialogue"></p>
+                <div class="dialogue_button" id="btn_suite_dialogue">Continuer</div>
+            </div>
+        </div>
+    </div>
+
+
+    <!------------- menu tuto ------------>
+    <div class="menu2_level1 invisible">
+        <!-- div pour montrer au joueur qu'on peut appuyer sur la droite et la gauche -->
+        <div class="touches">
+            <div class="touche_gauche"></div>
+            <div class="touche_droite"></div>
+        </div>
+        <div class="tuto_texte">
+            <h2>How to play?</h2>
+            <p>👉 touch the <strong>left</strong> or <strong>right</strong> side of the screen to move the character.
+            </p>
+            <p>🪵 Collect wood to build the mill.</p>
+            <p>🔥 Avoid the enemies' flaming arrows!</p>
+            <p>📱 Tilt your phone to control the wind.</p>
+        </div>
+
+        <div class="menu_button" id="btn_menu2">Play</div>
+    </div>
+
+    <!------------ menu défaite ------------>
+    <div class="menu_défaite_level1 invisible">
+        <h2>You lost!</h2>
+        <div class="menu_button" id="btn_recommencer">Restart</div>
+    </div>
+    <!------------ menu victoire ------------>
+    <div class="menu_fin_level1 invisible">
+        <h1>Victory!</h1>
+        <p>You have recovered the first chronogear!</p>
+        <div id="btn_fin" class="menu_button">Continue</div>
+    </div>
+
+
+    <!---------------------------------------------- Canvas de jeu ---------------------------------------------->
+    <canvas id="level1"></canvas>
+
+
+    <!-------------------------- images utilisés -------------------------->
+    <img id="fille1" class="invisible" src="img/Sprites/fille_level1.png" alt="">
+    <img id="fond" class="invisible" src="img/Sprites/fond.png">
+    <img id="sol" class="invisible" src="img/Sprites/Herbe.png">
+
+    <img id="joueur1" class="invisible" src="img/Sprites/sprite_personnage1.png" alt="">
+    <img id="joueur2" class="invisible" src="img/Sprites/sprite_personnage2.png" alt="">
+    <img id="joueur3" class="invisible" src="img/Sprites/sprite_personnage3.png" alt="">
+
+    <img id="bois" class="invisible" src="img/Sprites/bois.png" alt="">
+
+    <img id="Arrow1" class="invisible" src="img/Sprites/Arrow1.png" alt="">
+    <img id="Arrow2" class="invisible" src="img/Sprites/Arrow2.png" alt="">
+    <img id="Arrow3" class="invisible" src="img/Sprites/Arrow3.png" alt="">
+    <img id="Arrow4" class="invisible" src="img/Sprites/Arrow4.png" alt="">
+    <img id="Arrow_soin" class="invisible" src="img/Sprites/Arrow_soin.png" alt="">
+
+    <img id="vie" class="invisible" src="img/Sprites/coeur.png" alt="">
+
+    <img id="Moulin_0complete" src="img/Sprites/Moulin_0complete.png" alt="" class="invisible">
+    <img id="Moulin_25complete" src="img/Sprites/Moulin_25complete.png" class="invisible">
+    <img id="Moulin_50complete" src="img/Sprites/Moulin_50complete.png" class="invisible">
+    <img id="Moulin_75complete" src="img/Sprites/Moulin_75complete.png" class="invisible">
+    <img id="Moulin_100complete" src="img/Sprites/Moulin_100complete.png" class="invisible">
+
+    <img id="boue1" src="img/Sprites/boue1.png" alt="" class="invisible">
+    <img id="boue2" src="img/Sprites/boue2.png" alt="" class="invisible">
+
+    <img id="piece1" src="img/Sprites/piece1.png" alt="" class="invisible">
+
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/animation_texte.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

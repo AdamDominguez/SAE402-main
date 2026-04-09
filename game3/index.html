@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Level 3</title>
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="shortcut icon" href="img/piece3.png" type="image/png">
+
+    <!-- Leaflet & Routing -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
+</head>
+
+<body>
+    <div id="rotate-message">
+        <div class="rotate-content">
+            <div class="rotate-frame"></div>
+            <div class="rotate-icons">
+                <div class="rotate-icon">
+                    <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_12_2)">
+                            <path
+                                d="M3.4285 16C3.4285 16 3 13.5835 3 8.75C3 6.6485 3.081 5.069 3.1725 3.955C3.277 2.685 4.274 1.745 5.5455 1.6675C6.94 1.583 9.058 1.5 12 1.5C14.942 1.5 17.06 1.583 18.4545 1.6675C19.726 1.745 20.723 2.6855 20.8275 3.955C20.919 5.069 21 6.6485 21 8.75C21 13.5835 20.5715 16 20.5715 16"
+                                stroke="#4a3728" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                                fill="#8B7355" />
+                            <path
+                                d="M20.9095 12.41C20.6843 12.183 20.457 11.9582 20.2275 11.7355C18.0055 9.579 16.4295 8.498 15.501 7.971C15.1968 7.79519 14.8516 7.70262 14.5003 7.70262C14.1489 7.70262 13.8037 7.79519 13.4995 7.971C12.5705 8.498 10.995 9.579 8.77301 11.736C6.86801 13.584 5.67651 15.0225 4.96001 16.0005M1.52501 16.8115C1.58501 16.3405 2.02151 16.1115 2.49651 16.0965C3.67851 16.06 6.45501 16 12 16C17.545 16 20.3215 16.06 21.5035 16.097C21.9785 16.112 22.4155 16.3405 22.4745 16.812C22.4912 16.9363 22.4997 17.0823 22.5 17.25C22.5 17.4185 22.49 17.5635 22.475 17.6885C22.415 18.1595 21.9785 18.3885 21.5035 18.4035C20.3215 18.44 17.545 18.5 12 18.5C6.45501 18.5 3.67851 18.44 2.49651 18.403C2.02151 18.388 1.58451 18.1595 1.52551 17.688C1.50785 17.5427 1.49934 17.3964 1.50001 17.25C1.50001 17.0815 1.51001 16.9365 1.52501 16.8115Z"
+                                stroke="#4a3728" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                                fill="#C4A574" />
+                            <path
+                                d="M5.4225 18.463L3.777 21.7695C3.6345 22.0555 3.794 22.3995 4.111 22.4415C4.923 22.5495 5.7065 22.4875 6.207 22.42C6.5625 22.372 6.8715 22.167 7.084 21.8775L9.5665 18.496M10.1535 18.4975C10.257 19.8505 10.387 21.1415 10.458 21.8125C10.49 22.115 10.67 22.3715 10.97 22.4245C11.201 22.4655 11.534 22.4995 12.0005 22.4995C12.467 22.4995 12.8 22.4655 13.0305 22.4245C13.3305 22.3715 13.511 22.115 13.543 21.812C13.614 21.142 13.744 19.8505 13.848 18.4975M14.4335 18.496L16.9165 21.8775C17.129 22.167 17.4375 22.3725 17.793 22.42C18.293 22.4875 19.077 22.5495 19.8895 22.4415C20.206 22.3995 20.3655 22.0555 20.223 21.7695L18.5775 18.463M10 6.5C10 7.03043 9.78928 7.53914 9.41421 7.91421C9.03914 8.28929 8.53043 8.5 8 8.5C7.46956 8.5 6.96086 8.28929 6.58578 7.91421C6.21071 7.53914 6 7.03043 6 6.5C6 5.96957 6.21071 5.46086 6.58578 5.08579C6.96086 4.71071 7.46956 4.5 8 4.5C8.53043 4.5 9.03914 4.71071 9.41421 5.08579C9.78928 5.46086 10 5.96957 10 6.5Z"
+                                stroke="#4a3728" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <circle cx="8" cy="6.5" r="2" fill="#f4d03f" />
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_12_2">
+                                <rect width="24" height="24" fill="white" />
+                            </clipPath>
+                        </defs>
+                    </svg>
+                </div>
+            </div>
+            <h2>Rotate the Screen!</h2>
+            <p>Please rotate your device to portrait mode to admire the exhibition.</p>
+        </div>
+    </div>
+    <div id="geoloc-screen">
+        <div class="start-content">
+            <h1>Location Check</h1>
+            <p id="geoloc-status"
+                style="font-family: 'Georgia', serif; font-size: 18px; color: #4a3728; line-height: 1.4; margin-bottom: 25px;">
+                This exclusive game can only be played at the Museum of Fine Arts in Mulhouse.<br><br>
+                Please allow geolocation to confirm your presence.
+            </p>
+            <button id="geoloc-button" class="game-btn btn-blue" style="margin-bottom: 0;">Check my location</button>
+            <button id="show-map-btn" class="game-btn btn-map"
+                style="display: none; margin-top: 15px; background: #27ae60; border-bottom: 6px solid #2ecc71;">See the
+                route</button>
+        </div>
+    </div>
+
+    <!-- Map Modal -->
+    <div id="map-modal" class="map-modal" style="display: none;">
+        <div class="map-content">
+            <button id="close-map-btn" class="close-btn">X</button>
+            <h2
+                style="font-family: 'Georgia', serif; font-size: 24px; color: #4a3728; margin-bottom: 10px; margin-top: 5px;">
+                Route to the Museum</h2>
+            <div id="map-container" class="map-container-inner"
+                style="width: 100%; height: 50vh; border-radius: 10px; overflow: hidden; border: 2px solid #DAA520; position: relative; z-index: 10001;">
+                <div id="leaflet-map" style="width: 100%; height: 100%;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="start-screen" style="display: none;">
+        <div class="start-content">
+            <h1>The Lost Masterpiece</h1>
+            <button id="start-button">Start</button>
+        </div>
+    </div>
+
+    <div id="game-over-screen" style="display: none;">
+        <div class="menu-content">
+            <h1 class="game-over-title">GAME OVER</h1>
+            <p id="game-over-score" class="menu-subtitle">Score: 0</p>
+            <div class="buttons-container">
+                <button id="restart-button-go" class="game-btn btn-blue">Restart</button>
+                <button id="home-button-go" class="game-btn btn-red">Home</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="victory-screen" style="display: none;">
+        <div class="menu-content">
+            <h1 class="victory-title">VICTORY!</h1>
+            <p class="menu-subtitle">Chronogear Recovered!</p>
+            <div class="buttons-container">
+                <button id="continue-button-win" class="game-btn btn-blue">Continue</button>
+                <button id="restart-button-win" class="game-btn btn-gold">Restart</button>
+            </div>
+        </div>
+    </div>
+    <div id="game-container"></div>
+    <button id="pause-button" class="btn-pause">II</button>
+
+    <script src="script/game.js"></script>
+</body>
+
+</html>

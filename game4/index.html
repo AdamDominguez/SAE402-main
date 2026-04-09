@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Level 4</title>
+    <link rel="stylesheet" href="assets/css/game.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+
+<body>
+    <div id="map-container" class="map_screen">
+        <h2>Location required</h2>
+        <p>Go to the GPS point to unlock the mission.</p>
+
+        <div id="gps-tracker">
+            <button id="gps-btn">📍 Enable GPS</button>
+            <div id="gps-info" class="hidden">
+                <div id="info-distance">Searching for GPS signal...</div>
+                <p id="direction-text">Direction: waiting...</p>
+                <div id="compass-container">
+                    <div id="compass-arrow">⬆️</div>
+                </div>
+                <button id="open-map-btn" class="hidden">🗺️ Open map</button>
+            </div>
+        </div>
+
+        <div id="map-popup" class="gps_map_popup hidden">
+            <div class="gps_map_card">
+                <div class="gps_map_head">
+                    <h3>Route to destination</h3>
+                    <button id="close-map-btn" type="button">Close</button>
+                </div>
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="gameIntro" style="display: none;">
+        <div>
+            <h1>Rue du Sauvage - August 1944</h1>
+            <p>During the Liberation, the Allies bombed Mulhouse targeting the trams on Rue du Sauvage, but
+                due to inaccuracies, many civilians lost their lives.
+            </p>
+        </div>
+        <button class="gameIntroBtn">PLAY</button>
+    </div>
+
+    <div class="menu_dialogue" style="display: none;">
+        <div class="dialogue_conteneur">
+            <img class="dialogue_perso" src="assets/img/villageois.png" alt="Villageois">
+            <div class="boite_dialogue">
+                <h3>Villager</h3>
+                <p class="texte_dialogue" id="texte_dialogue">Flee, you fool! Allied bombers are pounding Rue
+                    du Sauvage! Take your Bugatti and get out of the city before the trams blow up in
+                    your face. May God protect you!</p>
+                <div class="dialogue_button" id="btn_fermer_dialogue">Continue</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="gameOverScreen" class="overlay_screen" style="display: none;">
+        <h1 class="titre_defaite">GAME OVER</h1>
+        <p id="gameOverMessage">Your Bugatti is destroyed!</p> <button class="overlay_btn"
+            id="btn_replay">Restart</button>
+    </div>
+
+    <div id="victoryScreen" class="overlay_screen" style="display: none;">
+        <h1 class="titre_victoire">Success!</h1>
+        <div class="glowing_piece">
+            <img src="assets/img/chronorouage_piece.png" alt="Pièce d'horlogerie">
+        </div>
+        <p>You found piece 4!</p>
+        <button class="overlay_btn" id="btn_victory_continue">Continue</button>
+    </div>
+
+    <canvas id="gameCanvas" style="display: none;"></canvas>
+
+    <div class="buggatiroyale" style="display: none;">
+        <img class="buggatiroyale_wheel" src="assets/img/steeringwheel.png" alt="Steering Wheel">
+        <img class="buggatiroyale_dash" src="assets/img/dashboard.png" alt="Dashboard">
+    </div>
+
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+    <script src="assets/js/steering.js"></script>
+</body>
+
+</html>

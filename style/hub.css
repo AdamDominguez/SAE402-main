@@ -1,0 +1,332 @@
+/* on remet tout à zéro pour éviter les marges par défaut des navigateurs */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* on prend tout l'écran avec un fond sombre et une typo style code/machine */
+html,
+body {
+    width: 100%;
+    height: 100dvh;
+    background: #111;
+    color: #fff;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* on fixe l'entête tout en haut par-dessus le reste */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+}
+
+#hub-header.hidden {
+    display: none;
+}
+
+/* on prépare l'icône du menu (les 3 petites barres) à droite de l'écran */
+.burger {
+    left: 100%;
+    position: absolute;
+    width: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.burger-active {
+    left: 100%;
+    position: absolute;
+    width: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px;
+}
+
+.burger span {
+    height: 3px;
+    background-color: white;
+}
+
+/* le menu latéral caché sur la gauche de base */
+.menu {
+    z-index: 65;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    transition: 0.4s;
+    transform: translateX(-100%);
+    width: 280px;
+    background-color: #1a1a1a;
+    border-right: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 16px;
+}
+
+/* la classe qui fait glisser le menu dans l'écran */
+.menu-active {
+    z-index: 65;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    transition: 0.4s;
+    transform: translateX(0%);
+    width: 280px;
+    background-color: #1a1a1a;
+    border-right: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 16px;
+}
+
+.menu h2 {
+    margin: 56px 0 24px 24px;
+    font-size: 1rem;
+}
+
+/* le style des liens avec un petit décalage au survol */
+.menu a {
+    margin: 0 0 22px 24px;
+    color: #fff;
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    padding: 6px 10px;
+    width: calc(100% - 40px);
+    transition: 0.2s;
+}
+
+.menu a:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-left-color: #fff;
+    transform: translateX(4px);
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.35);
+}
+
+/* ces classes transforment les 3 barres du burger en une croix (X) */
+.john-active {
+    transform: rotate(45deg) translatex(8px);
+    width: 38px;
+    transition: 0.4s;
+}
+
+.joe-active {
+    transform: rotate(-45deg) translatex(8px);
+    width: 38px;
+    transition: 0.4s;
+}
+
+.johnny-active {
+    opacity: 0;
+    transition: 0.4s;
+}
+
+/* le fond noir qui vient assombrir le jeu quand on ouvre le menu */
+.fond {
+    z-index: 62;
+    position: fixed;
+    pointer-events: none;
+    background-color: black;
+    opacity: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transition: 0.4s;
+}
+
+.fond-active {
+    opacity: 0.5;
+    pointer-events: initial;
+}
+
+/* la zone principale qui va contenir l'iframe du jeu */
+.hub-layout {
+    position: relative;
+    width: 100%;
+    height: 100dvh;
+    overflow: hidden;
+}
+
+#game-frame {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #000;
+}
+
+/* l'écran semi-transparent par-dessus le jeu pour lire l'histoire */
+.story-overlay {
+    position: absolute;
+    z-index: 40;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.72);
+    padding: 20px;
+}
+
+.story-overlay.hidden {
+    display: none;
+}
+
+/* la boîte au centre qui contient le texte du chapitre */
+.story-panel {
+    width: min(760px, 100%);
+    background: #1a1a1a;
+    border: 1px solid #333;
+    padding: 18px;
+}
+
+.story-panel h1 {
+    font-size: 1.35rem;
+    margin-bottom: 10px;
+}
+
+.story-panel p {
+    font-size: 1rem;
+    line-height: 1.4;
+    margin-bottom: 14px;
+}
+
+/* la zone des boutons sous le texte */
+.controls {
+    display: flex;
+    gap: 8px;
+}
+
+#launch-game-btn,
+#continue-btn,
+#reset-btn {
+    border: 1px solid #777;
+    background: #2a2a2a;
+    color: #fff;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+#launch-game-btn:hover,
+#continue-btn:hover,
+#reset-btn:hover {
+    background: #343434;
+}
+
+/* --- ZONE CINEMATIC SHAMAN --- */
+/* on gère l'écran d'intro en plein écran, tout en noir */
+.cinematic-overlay {
+    position: absolute;
+    z-index: 50;
+    inset: 0;
+    background: #000;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.cinematic-overlay.hidden {
+    display: none;
+}
+
+#cinematic-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+}
+
+/* on place l'image du chaman au milieu avec une animation pour qu'il flotte */
+#cinematic-shaman {
+    position: relative;
+    z-index: 52;
+    align-self: center;
+    width: auto;
+    height: auto;
+    max-width: 90vw;
+    max-height: 55vh;
+    object-fit: contain;
+    margin-bottom: -10px;
+    animation: drift 3s infinite alternate ease-in-out;
+}
+
+/* l'animation qui fait monter et descendre doucement l'image */
+@keyframes drift {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-15px);
+    }
+}
+
+/* la boîte de dialogue en bas façon vieux RPG */
+#cinematic-dialogue-box {
+    position: relative;
+    z-index: 55;
+    background: rgba(0, 0, 0, 0.85);
+    border-top: 2px solid #555;
+    padding: 20px;
+    min-height: 160px;
+    width: 100%;
+    cursor: pointer;
+}
+
+#cinematic-speaker {
+    color: #ffcc00;
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-family: 'Jersey 10', 'Courier New', Courier, monospace;
+}
+
+#cinematic-text {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #eee;
+    margin-bottom: 15px;
+    font-family: 'Jersey 10', 'Courier New', Courier, monospace;
+}
+
+/* la petite phrase qui clignote pour dire au joueur d'avancer */
+#cinematic-hint {
+    display: block;
+    font-size: 0.85rem;
+    color: #888;
+    text-align: right;
+    animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* on cache les lettres par défaut pour pouvoir faire l'effet machine à écrire en JS */
+.lettre {
+    opacity: 0;
+}
+
+.lettre.visible {
+    opacity: 1;
+}

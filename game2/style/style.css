@@ -1,0 +1,408 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body,
+html {
+    width: 100%;
+    height: 100dvh;
+    overflow: hidden;
+    background-color: #1a1a1a;
+    font-family: 'Courier New', Courier, monospace;
+    /* Style gothique/rétro */
+    color: white;
+    /* Empêche le pull-to-refresh sur mobile */
+    overscroll-behavior: none;
+    touch-action: none;
+}
+
+#start-screen p {
+    font-family: "Micro 5", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 38px;
+}
+
+#game-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+#ui-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    /* Laisse passer les clics vers le canvas si nécessaire */
+    z-index: 10;
+}
+
+#score {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    text-shadow: 2px 2px 0px #000;
+}
+
+#mute-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    font-size: 30px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 3px solid white;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    pointer-events: auto;
+    z-index: 100;
+}
+
+#pause-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    min-width: 110px;
+    height: 44px;
+    padding: 0 16px;
+    font-size: 22px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 3px solid white;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    pointer-events: auto;
+    z-index: 100;
+}
+
+#pause-btn:hover {
+    background-color: #ffaa00;
+}
+
+#mute-btn:hover {
+    background-color: #ffaa00;
+}
+
+#mute-btn svg,
+#mute-btn path {
+    color: #fff !important;
+    fill: #fff !important;
+}
+
+#mute-btn svg {
+    width: 28px;
+    height: 28px;
+    display: block;
+    flex-shrink: 0;
+}
+
+#shame-bar-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 150px;
+    height: 20px;
+    background-color: #333;
+    border: 2px solid white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Barre de honte rouge */
+#shame-bar {
+    width: 0%;
+    height: 100%;
+    background-color: #ff3333;
+    transition: width 0.1s linear;
+}
+
+#start-screen,
+#game-over-screen,
+#game-win-screen,
+#orientation-lock-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    pointer-events: auto;
+    /* Les boutons doivent recevoir les clics */
+    padding: 20px;
+}
+
+#orientation-lock-screen {
+    z-index: 200;
+}
+
+#adventure-start-btn {
+    margin-top: 18px;
+}
+
+#dialogue-stage {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: auto;
+}
+
+#dialogue-background {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.75);
+}
+
+#dialogue-villager-young,
+#dialogue-villager-old,
+#dialogue-cart,
+#dialogue-executioner {
+    position: absolute;
+    bottom: 14%;
+    max-height: 62%;
+    object-fit: contain;
+    z-index: 3;
+}
+
+#dialogue-villager-young {
+    left: 6%;
+}
+
+#dialogue-cart {
+    left: 32%;
+    max-height: 45%;
+    bottom: 13%;
+    z-index: 2;
+}
+
+#dialogue-villager-old {
+    right: 7%;
+}
+
+#dialogue-executioner {
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(150vw, 800rem);
+    max-height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    z-index: 4;
+}
+
+#dialogue-black-screen {
+    position: absolute;
+    inset: 0;
+    background: #000;
+    z-index: 5;
+}
+
+#dialogue-box {
+    position: absolute;
+    left: 50%;
+    bottom: 24px;
+    transform: translateX(-50%);
+    width: min(920px, 94vw);
+    background: rgba(0, 0, 0, 0.72);
+    border: 2px solid rgba(255, 255, 255, 0.85);
+    border-radius: 12px;
+    padding: 14px 16px 12px;
+    z-index: 6;
+    text-align: left;
+    overflow: hidden;
+}
+
+#dialogue-speaker {
+    font-family: "Micro 5", sans-serif;
+    font-size: 34px;
+    color: #ffaa00;
+    margin-bottom: 8px;
+}
+
+#dialogue-text {
+    font-family: "Micro 5", sans-serif;
+    font-size: 30px;
+    margin-bottom: 10px;
+    line-height: 1.2;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    max-height: 26vh;
+    overflow-y: auto;
+}
+
+.lettre {
+    opacity: 0;
+    transition: opacity 0.04s linear;
+}
+
+.lettre.visible {
+    opacity: 1;
+}
+
+.hidden {
+    display: none !important;
+}
+
+h1 {
+    font-family: "Jacquard 24", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 80px;
+
+    margin-bottom: 20px;
+    color: #ffaa00;
+    text-shadow: 2px 2px 0px #000;
+}
+
+p {
+    font-size: 18px;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+button {
+    padding: 15px 30px;
+    font-size: 20px;
+    font-family: "Micro 5", sans-serif;
+    font-weight: bold;
+    color: #fff;
+    background-color: #ffaa00;
+    border: 3px solid #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background-color 0.2s;
+}
+
+button:active {
+    background-color: #cc8800;
+}
+
+button:disabled {
+    background-color: #555 !important;
+    border-color: #777 !important;
+    color: #aaa !important;
+    cursor: not-allowed;
+}
+
+#game-win-screen button {
+    display: block;
+    width: min(340px, 82vw);
+    margin-bottom: 12px;
+}
+
+#game-win-screen button:last-of-type {
+    margin-bottom: 0;
+}
+
+/* Texte statut GPS */
+#gps-status {
+    font-family: "Micro 5", sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.gps-waiting {
+    color: #ffaa00;
+}
+
+.gps-error {
+    color: #ff5555;
+}
+
+.gps-ok {
+    color: #55ff55;
+}
+
+#open-map-btn {
+    margin-bottom: 12px;
+    background-color: #2b78e4;
+    border-color: #ffffff;
+    font-size: 24px;
+}
+
+#open-map-btn:active {
+    background-color: #1a56ac;
+}
+
+#map-popup {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 300;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    pointer-events: auto;
+}
+
+#map-popup-content {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    height: 80%;
+    background-color: #1a1a1a;
+    border: 3px solid #ffaa00;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#close-map-btn {
+    margin: 10px;
+    font-size: 20px;
+    padding: 8px 16px;
+    background-color: #ff5555;
+}
+
+#map {
+    flex-grow: 1;
+    width: 100%;
+}
+
+/* leaflet routing adjustments for dark mode */
+.leaflet-routing-container {
+    background-color: rgba(26, 26, 26, 0.95);
+    color: white;
+    font-family: inherit;
+}
+
+.leaflet-routing-alt h2 {
+    color: #ffaa00;
+}
+
+.leaflet-routing-alt table {
+    color: #ddd;
+}

@@ -1,0 +1,29 @@
+{
+    "name": "Le Chrono Rouage - Chronogear",
+    "short_name": "Chrono Rouage - Chronogear",
+    "description": "Hub de l'aventure Le Chrono Rouage jouable en Progressive Web App. - The Chrono Rouage adventure hub, playable as a Progressive Web App.",
+    "lang": "fr",
+    "start_url": "./index.html?utm_source=launcher",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "theme_color": "#111111",
+    "background_color": "#111111",
+    "icons": [
+        {
+            "src": "favicon/favicon-96x96.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        },
+        {
+            "src": "favicon/web-app-manifest-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "favicon/web-app-manifest-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
